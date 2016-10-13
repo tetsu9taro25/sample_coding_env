@@ -1,0 +1,20 @@
+{
+  "name": "ProjectName",
+  "version": "0.0.0",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-rename": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*",
+    "gulp-jshint": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-csslint": "*",
+    "gulp-htmlhint": "*",
+    "gulp-sass": "*",
+    "gulp-slim": "*",
+    "gulp-coffee": "*",
+    "gulp-plumber": "*",
+    "gulp-notify": "*",
+    "jshint-stylish": "*"
+  }
+}
