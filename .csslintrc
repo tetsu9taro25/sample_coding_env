@@ -15,5 +15,6 @@
   "unique-headings": false,
   "unqualified-attributes": false,
   "qualified-headings": false,
+  "order-alphabetical": false,
   "fallback-colors": false
 }

@@ -30,15 +30,22 @@ var paths = {
     'gulpfile.js',
     'htdocs/**/*.js',
     '!htdocs/**/all.min.js',
-    '!htdocs/**/vendor/**/*.js'
+    '!htdocs/**/vendor/**/*.js',
+    '!htdocs/toppage/**/*.js'
   ],
   styles: [
     'htdocs/**/*.scss',
-    '!htdocs/**/_*.scss'
+    '!htdocs/**/_*.scss',
+    '!htdocs/toppage/**/*.scss'
+  ],
+  htmlhint: [
+    'htdocs/**/*.html',
+    '!htdocs/toppage/**/*.html'
   ],
   slim: [
     'htdocs/**/*.slim',
-    '!htdocs/**/includes/*.slim'
+    '!htdocs/**/includes/*.slim',
+    '!htdocs/toppage/**/*.slim'
   ],
   watch: {
     styles: [
@@ -107,7 +114,21 @@ gulp.task('styles', function() {
     }))
     .pipe(gulp.dest('htdocs/'))
     .pipe(csslint('.csslintrc'))
-    .pipe(csslint.reporter());
+    .pipe(csslint.formatter())
+    .pipe(csslint.formatter('fail'));
+});
+
+/**
+ * htmlhint
+ */
+gulp.task('htmlhint', function() {
+  gulp
+    .src(paths.htmlhint)
+    .pipe(plumber())
+    .pipe(htmlhint('.htmlhintrc'))
+    .pipe(htmlhint.reporter())
+    .pipe(htmlhint.failReporter())
+    .on('error', notify.onError());
 });
 
 /**
@@ -122,7 +143,7 @@ gulp.task('slim', function() {
       require: 'slim/include',
       options: 'include_dirs=["htdocs/includes"]'
     }))
-    .pipe(gulp.dest('htdocs/'))
+    .pipe(gulp.dest('htdocs/detailpage'))
     .pipe(htmlhint('.htmlhintrc'))
     .pipe(htmlhint.failReporter())
     .on('error', notify.onError());
@@ -131,7 +152,7 @@ gulp.task('slim', function() {
 /**
  * Task dependencies.
  */
-gulp.task('all', ['scripts', 'jshint', 'styles', 'slim']);
+gulp.task('all', ['scripts', 'jshint', 'styles', 'htmlhint', 'slim']);
 
 /**
  * Watch.
@@ -140,6 +161,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['scripts']);
   gulp.watch(paths.jshint, ['jshint']);
   gulp.watch(paths.watch.styles, ['styles']);
+  gulp.watch(paths.htmlhint, ['htmlhint']);
   gulp.watch(paths.watch.slim,['slim']);
 });
 
