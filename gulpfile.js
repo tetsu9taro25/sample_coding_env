@@ -11,7 +11,8 @@ var gulp = require('gulp')
   , jshint = require('gulp-jshint')
   , stylish = require('jshint-stylish')
   , sass = require('gulp-sass')
-  , slim = require('gulp-slim')
+  //, slim = require('gulp-slim')
+  , haml = require('gulp-haml')
   , coffee = require('gulp-coffee')
   , prefix = require('gulp-autoprefixer')
   , csslint = require('gulp-csslint')
@@ -30,30 +31,33 @@ var paths = {
     'gulpfile.js',
     'htdocs/**/*.js',
     '!htdocs/**/all.min.js',
-    '!htdocs/**/vendor/**/*.js',
-    '!htdocs/toppage/**/*.js'
+    '!htdocs/**/vendor/**/*.js'
   ],
   styles: [
     'htdocs/**/*.scss',
-    '!htdocs/**/_*.scss',
-    '!htdocs/toppage/**/*.scss'
+    '!htdocs/**/_*.scss'
   ],
   htmlhint: [
-    'htdocs/**/*.html',
-    '!htdocs/toppage/**/*.html'
+    'htdocs/**/*.html'
   ],
-  slim: [
-    'htdocs/**/*.slim',
-    '!htdocs/**/includes/*.slim',
-    '!htdocs/toppage/**/*.slim'
+//  slim: [
+//    'htdocs/**/*.slim',
+//    '!htdocs/**/includes/*.slim'
+//  ],
+  haml: [
+    'htdocs/**/*.haml',
+    '!htdocs/**/includes/*.haml'
   ],
   watch: {
     styles: [
       'htdocs/**/*.scss'
     ],
-    slim: [
-      'htdocs/**/*.slim'
-    ]
+//    slim: [
+//      'htdocs/**/*.slim'
+//    ]
+    haml: [
+      'htdocs/**/*.haml'
+    ],
   }
 };
 
@@ -131,28 +135,33 @@ gulp.task('htmlhint', function() {
     .on('error', notify.onError());
 });
 
-/**
- * Compile slim
- */
-gulp.task('slim', function() {
-  gulp
-    .src(paths.slim)
-    .pipe(plumber())
-    .pipe(slim({
-      pretty: true,
-      require: 'slim/include',
-      options: 'include_dirs=["htdocs/includes"]'
-    }))
-    .pipe(gulp.dest('htdocs/detailpage'))
-    .pipe(htmlhint('.htmlhintrc'))
-    .pipe(htmlhint.failReporter())
-    .on('error', notify.onError());
-});
+///**
+// * Compile slim
+// */
+//gulp.task('slim', function() {
+//  gulp
+//    .src(paths.slim)
+//    .pipe(plumber())
+//    .pipe(slim({
+//      pretty: true,
+//      require: 'slim/include',
+//      options: 'include_dirs=["htdocs/includes"]'
+//    }))
+//    .pipe(gulp.dest('htdocs/detailpage'))
+//    .pipe(htmlhint('.htmlhintrc'))
+//    .pipe(htmlhint.failReporter())
+//    .on('error', notify.onError());
+//});
 
 /**
  * Task dependencies.
  */
-gulp.task('all', ['scripts', 'jshint', 'styles', 'htmlhint', 'slim']);
+gulp.task('all', ['scripts',
+          'jshint',
+          'styles',
+          //'slim',
+          'haml',
+          'htmlhint']);
 
 /**
  * Watch.
@@ -162,7 +171,8 @@ gulp.task('watch', function() {
   gulp.watch(paths.jshint, ['jshint']);
   gulp.watch(paths.watch.styles, ['styles']);
   gulp.watch(paths.htmlhint, ['htmlhint']);
-  gulp.watch(paths.watch.slim,['slim']);
+  //gulp.watch(paths.watch.slim,['slim']);
+  gulp.watch(paths.watch.haml,['haml']);
 });
 
 /**
