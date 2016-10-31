@@ -45,8 +45,7 @@ var paths = {
 //    '!htdocs/**/includes/*.slim'
 //  ],
   haml: [
-    'htdocs/**/*.haml',
-    '!htdocs/**/includes/*.haml'
+    'htdocs/**/*.haml'
   ],
   watch: {
     styles: [
@@ -152,6 +151,20 @@ gulp.task('htmlhint', function() {
 //    .pipe(htmlhint.failReporter())
 //    .on('error', notify.onError());
 //});
+
+/**
+ * Compile slim
+ */
+gulp.task('haml', function() {
+  gulp
+    .src(paths.haml)
+    .pipe(plumber())
+    .pipe(haml())
+    .pipe(gulp.dest('htdocs'))
+    .pipe(htmlhint('.htmlhintrc'))
+    .pipe(htmlhint.failReporter())
+    .on('error', notify.onError());
+});
 
 /**
  * Task dependencies.
