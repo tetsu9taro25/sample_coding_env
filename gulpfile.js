@@ -12,8 +12,8 @@ var gulp = require('gulp')
   , stylish = require('jshint-stylish')
   , sass = require('gulp-sass')
   //, slim = require('gulp-slim')
-  , haml = require('gulp-haml')
-  , coffee = require('gulp-coffee')
+  //, haml = require('gulp-haml')
+  //, coffee = require('gulp-coffee')
   , prefix = require('gulp-autoprefixer')
   , csslint = require('gulp-csslint')
   , htmlhint = require('gulp-htmlhint')
@@ -44,9 +44,9 @@ var paths = {
 //    'htdocs/**/*.slim',
 //    '!htdocs/**/includes/*.slim'
 //  ],
-  haml: [
-    'htdocs/**/*.haml'
-  ],
+//  haml: [
+//    'htdocs/**/*.haml'
+//  ],
   watch: {
     styles: [
       'htdocs/**/*.scss'
@@ -152,19 +152,19 @@ gulp.task('htmlhint', function() {
 //    .on('error', notify.onError());
 //});
 
-/**
- * Compile slim
- */
-gulp.task('haml', function() {
-  gulp
-    .src(paths.haml)
-    .pipe(plumber())
-    .pipe(haml())
-    .pipe(gulp.dest('htdocs'))
-    .pipe(htmlhint('.htmlhintrc'))
-    .pipe(htmlhint.failReporter())
-    .on('error', notify.onError());
-});
+///**
+// * Compile Haml
+// */
+//gulp.task('haml', function() {
+//  gulp
+//    .src(paths.haml)
+//    .pipe(plumber())
+//    .pipe(haml())
+//    .pipe(gulp.dest('htdocs'))
+//    .pipe(htmlhint('.htmlhintrc'))
+//    .pipe(htmlhint.failReporter())
+//    .on('error', notify.onError());
+//});
 
 /**
  * Task dependencies.
@@ -173,7 +173,7 @@ gulp.task('all', ['scripts',
           'jshint',
           'styles',
           //'slim',
-          'haml',
+          //'haml',
           'htmlhint']);
 
 /**
@@ -183,9 +183,9 @@ gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['scripts']);
   gulp.watch(paths.jshint, ['jshint']);
   gulp.watch(paths.watch.styles, ['styles']);
-  gulp.watch(paths.htmlhint, ['htmlhint']);
   //gulp.watch(paths.watch.slim,['slim']);
-  gulp.watch(paths.watch.haml,['haml']);
+  //gulp.watch(paths.watch.haml,['haml']);
+  gulp.watch(paths.htmlhint, ['htmlhint']);
 });
 
 /**

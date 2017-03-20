@@ -13,7 +13,6 @@
     "gulp-sass": "*",
     "gulp-slim": "*",
     "gulp-haml": "*",
-    "gulp-coffee": "*",
     "gulp-plumber": "*",
     "gulp-notify": "*",
     "jshint-stylish": "*"
